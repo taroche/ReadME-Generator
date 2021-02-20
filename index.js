@@ -1,10 +1,7 @@
 // TODO: Include packages needed for this application
-import * as generateMarkdown from "./utils/generateMarkdown.js";
+const generateMarkdown = require("./utils/generateMarkdown")
 const inquirer = require("inquirer");
 const fs = require('fs');
-const util = require('util');
-// TODO: Create an array of questions for user input
-const writeFileAsync = util.promisify(fs.writeToFile);
 
 const promptUser = () => {
     return inquirer.prompt([
@@ -22,12 +19,12 @@ const promptUser = () => {
         },
         {
             type: 'input',
-            message: "What is the name of your GitHub repo?",
-            name: 'repo',
-            default: 'readme-generator',
+            name: 'email',
+            message: "Please enter your email address",
             validate: (answer) => {
                 if (answer.length < 1) {
-                    return console.log("A valid GitHub repo is required for a badge.");
+                    return console.log("A valid email address is required.");
+
                 }
                 return true;
             }
@@ -79,21 +76,21 @@ const promptUser = () => {
         {
             type: 'list',
             message: "Choose a license for your project.",
-            choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'The Unlicense'],
+            choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache-2.0', 'MIT', 'Boost Software License 1.0', 'The Unlicense'],
             name: 'license'
         }
     ])
 };
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
+// function writeToFile(fileName, data) {
 
-}
+// }
 
 // TODO: Create a function to initialize app
 function init() { 
     promptUser()
-    .then((answers) => writeFileAsync('SampleReadME.md', generateMarkdown(answers)))
+    .then((answers) => fs.writeFileSync('ReadME.md', generateMarkdown(answers)))
     .then(() => console.log('Successfully wrote to ReadME.md'))
     .catch((err) => console.error(err));
 }
