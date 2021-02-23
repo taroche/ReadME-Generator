@@ -44,19 +44,65 @@ function renderLicenseSection(license) {
   ${renderedLicense}${renderedLink}`
 }
 
-function renderTableOfContent(data) {
+function renderTableOfContent(inst, us, con, tes) {
   return `
   ## Table of Contents
   
-  ${data.installation !== '' ? '* [Installation](#installation)': ''}
-  ${data.usage !== '' ? '* [Usage](#usage)': ''}
-  ${data.contributing !== '' ? '* [Contributing](#contributing)': ''}
-  ${data.tests !== '' ? '* [Tests](#tests)': ''}
+  ${inst !== '' ? '* [Installation](#installation)': ''}
+  ${us !== '' ? '* [Usage](#usage)': ''}
+  ${con !== '' ? '* [Contributing](#contributing)': ''}
+  ${tes !== '' ? '* [Tests](#tests)': ''}
   * [Questions](#questions)`
 }
 
+function renderDescription(data) {
+  return `
+  ## Description 
+  
+  *The what, why, and how:* 
+  
+  ${data}`
+}
 
+function renderInstallation(data){
+  return `
+  ${data !== '' ? `  
+  ## Installation
+  
+  *Steps required to install project and how to get the development environment running:*
+  
+  ${data}`: ''}`
+}
 
+function renderUsage(data) {
+  return `
+  ${data !== '' ? `   
+  ## Usage 
+  
+  *Instructions and examples for use:*
+  
+  ${data}`: ''}`
+}
+
+function renderContributing(data) {
+  return `
+  ${data !== '' ? `   
+  ## Contributing
+  
+  *If you would like to contribute it, you can follow these guidelines for how to do so.*
+  
+  ${data}`: ''}`
+}
+
+function rendertests(data) {
+  return `
+  ${data !== '' ? `   
+  ## Tests
+  
+  *Tests for application and how to run them:*
+  
+  ${data}`: ''}`
+}
 
 function generateMarkdown(data) {
 
@@ -65,58 +111,18 @@ function generateMarkdown(data) {
 
   ${renderLicenseSection(data.license)}
   
-  ## Description 
-  
-  *The what, why, and how:* 
-  
-  ${data.description}
+  ${renderDescription(data.description)}
 
-  ${renderTableOfContent(data)}
-  `
+  ${renderTableOfContent(data.installation, data.usage, data.contributing, data.tests)}
 
+  ${renderInstallation(data.installation)}
 
-  if (data.installation !== '') {
-    draftMarkdown +=
-      `
-  
-  ## Installation
-  
-  *Steps required to install project and how to get the development environment running:*
-  
-  ${data.installation}`
-  };
-  if (data.usage !== '') {
-    draftMarkdown +=
-      `
-  
-  ## Usage 
-  
-  *Instructions and examples for use:*
-  
-  ${data.usage}`
-  };
-  if (data.contributing !== '') {
-    draftMarkdown +=
-    `
-  
+  ${renderUsage(data.usage)}
 
-  ## Contributing
-  
-  *If you would like to contribute it, you can follow these guidelines for how to do so.*
-  
-  ${data.contributing}`
-  };
-  if (data.tests !== '') {
-    draftMarkdown +=
-      `
-  
-  ## Tests
-  
-  *Tests for application and how to run them:*
-  
-  ${data.tests}`
+  ${renderContributing(data.contributing)}
 
-  draftMarkdown +=`
+  ${rendertests(data.tests)}
+
   ## Questions
   
   This is how you can get a hold of me either at my Github account or by email.
@@ -124,10 +130,7 @@ function generateMarkdown(data) {
   GiuHub username: [${data.username}](https://www.github.com/${data.username})
   
   Email: [${data.email}](mailto:${data.email})
-
   `
-  };
-
 
   return draftMarkdown;
 }
