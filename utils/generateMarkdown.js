@@ -1,11 +1,8 @@
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
+
 function renderLicenseBadge(license) {
   return `[![License: ${license}](https://img.shields.io/badge/License-${license}-red)]`
 }
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
 function renderLicenseLink(license) {
   switch(license) {
     case "Apache License 2.0":
@@ -38,57 +35,44 @@ function renderLicenseLink(license) {
   }
 }
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
 function renderLicenseSection(license) { 
   let renderedLicense = renderLicenseBadge(license)
   let renderedLink = renderLicenseLink(license)
-  return `## License
-  
-  This is my License. There are many like it, but this one is mine
+  return `
+  ## License
 
   ${renderedLicense}${renderedLink}`
 }
 
-// TODO: Create a function to generate markdown for README
+function renderTableOfContent(data) {
+  return `
+  ## Table of Contents
+  
+  ${data.installation !== '' ? '* [Installation](#installation)': ''}
+  ${data.usage !== '' ? '* [Usage](#usage)': ''}
+  ${data.contributing !== '' ? '* [Contributing](#contributing)': ''}
+  ${data.tests !== '' ? '* [Tests](#tests)': ''}
+  * [Questions](#questions)`
+}
+
+
+
+
 function generateMarkdown(data) {
-  let draftToC = `## Table of Contents`;
-  let licenseSection;
-  if(data.license) {
-    licenseSection = renderLicenseSection(data.license)
-  } else {
-    licenseSection = "No license data provided."
-  }
-  if (data.installation !== '') {
-    draftToC += `
-  * [Installation](#installation)` };
-
-  if (data.usage !== '') {
-    draftToC += `
-  * [Usage](#usage)` };
-
-  if (data.contributing !== '') {
-    draftToC += `
-  * [Contributing](#contributing)` };
-
-  if (data.tests !== '') {
-    draftToC += `
-  * [Tests](#tests)` };
 
   let draftMarkdown =
     `# ${data.title}
 
-    
-  
+  ${renderLicenseSection(data.license)}
   
   ## Description 
   
   *The what, why, and how:* 
   
   ${data.description}
-  `
 
-  draftMarkdown += draftToC;
+  ${renderTableOfContent(data)}
+  `
 
 
   if (data.installation !== '') {
@@ -115,8 +99,6 @@ function generateMarkdown(data) {
     draftMarkdown +=
     `
   
-
-  ${licenseSection}
 
   ## Contributing
   
