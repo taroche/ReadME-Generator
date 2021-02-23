@@ -76,7 +76,7 @@ const promptUser = () => {
         {
             type: 'list',
             message: "Choose a license for your project.",
-            choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache-2.0', 'MIT', 'Boost Software License 1.0', 'The Unlicense'],
+            choices: ['Apache License 2.0', `BSD 3-Clause license`, `BSD 2-Clause license`, `GNU General Public License (GPL)`, `GNU Library or "Lesser" General Public License (LGPL)`, `MIT license`, `Mozilla Public License 2.0`, `Common Development and Distribution License`, `Eclipse Public License version 2.0`],
             name: 'license'
         }
     ])
